@@ -12,14 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
     private String[] items;
     private int[] programImages = {
-            R.drawable.h6jJMYjltWk,
-            R.drawable.jadMxMbKbiQ,
-            R.drawable.Jt4ABNbETW4,
-            R.drawable.oGTvZCs3GhI,
-            R.drawable.u1Re1UAer7g,
-            R.drawable.u7XAOL8N_3U,
-            R.drawable.wrr6bqkJiD0,
-            R.drawable.XXt6wwDWNEM
+            R.drawable._1,
+            R.drawable._2,
+            R.drawable._3,
+            R.drawable._4,
+            R.drawable._5,
+            R.drawable._6,
+            R.drawable._7,
+            R.drawable._8,
+            R.drawable._9
     };
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -48,7 +49,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.getImageView().setImageResource(position);
+        holder.getImageView().setImageResource(programImages[position]);
     }
 
     @Override
