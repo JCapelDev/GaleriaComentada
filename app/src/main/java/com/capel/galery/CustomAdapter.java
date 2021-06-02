@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
     Context context;
-    String [] programCommentList;
-    int[] images;
+    private ArrayList<String> programCommentList;
+    private ArrayList<String> images;
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -36,7 +39,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         }
     }
 
-    public CustomAdapter(Context context, String[] programCommentList, int[] images){
+    public CustomAdapter(Context context, ArrayList<String> programCommentList, ArrayList<String> images){
         this.context = context;
         this.programCommentList = programCommentList;
         this.images = images;
@@ -53,12 +56,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.commentView.setText(programCommentList[position]);
-        holder.imageView.setImageBitmap(ThumbnailUtils.extractThumbnail(BitmapFactory.decodeResource(context.getResources(),images[position]),200,200));
+        holder.commentView.setText(programCommentList.get(position).replaceAll("\\s+"," "));
+        holder.imageView.setImageBitmap(ThumbnailUtils.extractThumbnail(BitmapFactory.decodeResource(context.getResources(),context.getResources().getIdentifier(images.get(position).replaceAll("\\s+",""),"drawable",context.getPackageName())),200,200));
     }
 
     @Override
     public int getItemCount() {
-        return images.length;
+        return images.size();
     }
 }

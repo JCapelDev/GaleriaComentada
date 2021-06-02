@@ -1,6 +1,7 @@
 package com.capel.galery;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.Adapter customAdapter;
     RecyclerView.LayoutManager layoutManager;
+    Context context;
 
     private String[] programComments = {
             /*"Comentario 1",
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private int[] programImages = {
-            /*R.drawable._1,
+            R.drawable._1,
             R.drawable._2,
             R.drawable._3,
             R.drawable._4,
@@ -38,11 +40,11 @@ public class MainActivity extends AppCompatActivity {
             R.drawable._6,
             R.drawable._7,
             R.drawable._8,
-            R.drawable._9*/
+            R.drawable._9
     };
 
     private ArrayList<String> alprogramComments;
-    private ArrayList<Integer> alprogramImages;
+    private ArrayList<String> alprogramImages;
 
     File file;
     @Override
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        customAdapter = new CustomAdapter(this,programComments,programImages);
+        customAdapter = new CustomAdapter(this,alprogramComments,alprogramImages);
         recyclerView.setAdapter(customAdapter);
     }
 
@@ -65,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }*/
-
-        alprogramImages = XML.getNumberByTag(XML.getDocument("/data/data/com.capel.galery/files/data.xml"),"image");
+        //File file = new File(context.getFilesDir(), "data.xml");
+        alprogramImages = XML.getTextByTag(XML.getDocument("/data/data/com.capel.galery/files/data.xml"),"id");
         alprogramComments = XML.getTextByTag(XML.getDocument("/data/data/com.capel.galery/files/data.xml"),"comment");
     }
 }
