@@ -88,12 +88,7 @@ public class XML {
 	 * @return El texto del nodo pasado como parametro
 	 */
 	public static int getNumber(Node n) {
-		try {
-			return Integer.parseInt(n.getTextContent());
-		} catch (final NumberFormatException e) {
-			return 0;
-		}
-
+		return Integer.parseInt(n.getTextContent());
 	}
 	
 	/**@param n La lista de nodos de la cual se quiere extraer el contenido de cada nodo
@@ -129,6 +124,15 @@ public class XML {
 	 */
 	public static ArrayList<String> getTextByTag(Document doc, String tag) {
 		return XML.getText(doc.getElementsByTagName(tag));
+	}
+	
+	/**@param doc El Document con el arbol XML
+	 * @param tag Una String con el nombre de la etiqueta a buscar
+	 * 
+	 * @return El NodeList especificado en la tag
+	 */
+	public static NodeList getNodeListByTag(Document doc, String tag) {
+		return doc.getElementsByTagName(tag);
 	}
 
 	/**@param doc El Document con el arbol XML
@@ -206,6 +210,20 @@ public class XML {
 			s.addAll(XML.getAttributeName(n.item(i)));
 		}
 		return s;
+	}
+	
+	/**@param n el nodo el cual se le quiere actualizar el texto
+	 * @param newText el nuevo texto del nodo
+	 * 
+	 * @return true si se ha podido actualizar y false si ha habido algun problema
+	 */
+	public static boolean updateText(Node n, String newText) {
+		try {
+			n.setTextContent(newText);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	/**@param doc el documento a escribir 

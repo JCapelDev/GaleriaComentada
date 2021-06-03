@@ -25,11 +25,21 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <EditText
             android:id="@+id/textView1"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:inputType="text"
             android:text="@string/comment"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:autofillHints="" />
+
+
+        <Button
+            android:id="@+id/btn_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="editComment"
+            android:text="@string/editar_comentario" />
     </LinearLayout>
 </LinearLayout>

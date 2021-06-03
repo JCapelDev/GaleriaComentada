@@ -8,12 +8,23 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/id_recyclerView"
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:layout_width="413dp"
+        android:layout_height="625dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.283" />
+
+    <Button
+        android:id="@+id/btn_Foto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="takePhoto"
+        android:text="@string/haz_una_foto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_recyclerView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

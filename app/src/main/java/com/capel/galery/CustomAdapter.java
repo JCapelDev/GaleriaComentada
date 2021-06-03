@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             // Define click listener for the ViewHolder's View
             commentView = (TextView) view.findViewById(R.id.textView1);
             imageView = (ImageView) view.findViewById(R.id.imageView);
+
         }
 
         public ImageView getImageView() {
@@ -43,6 +45,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         this.context = context;
         this.programCommentList = programCommentList;
         this.images = images;
+
     }
 
     @NonNull
@@ -51,6 +54,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.custom_item, parent,false);
         ViewHolder viewHolder = new ViewHolder(view);
+
         return viewHolder;
     }
 
