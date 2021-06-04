@@ -46,12 +46,12 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*recyclerView = findViewById(R.id.id_recyclerView);
+        recyclerView = findViewById(R.id.id_recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         customAdapter = new CustomAdapter(this,alprogramComments,alprogramImages);
-        recyclerView.setAdapter(customAdapter);*/
+        recyclerView.setAdapter(customAdapter);
 
     }
 
@@ -94,6 +94,17 @@ public class MainActivity extends AppCompatActivity {
         XML.createDocument(doc, f.getAbsolutePath());
     }
 
+    public void addNewImage(Document doc, String name) {
+        XML.updateText(XML.getNodeList(doc, ".//id").item(XML.getNodeList(doc, ".//id").getLength() - 1), name);
+        XML.updateText(XML.getNodeList(doc, ".//comment").item(XML.getNodeList(doc, ".//comment").getLength() - 1), "Comentario por defecto");
+
+        XML.addNode(doc, XML.getNodeByTag(doc, "images"), "image");
+        XML.addNode(doc, XML.getNodeList(doc, ".//image").item(XML.getNodeList(doc, ".//image").getLength() - 1), "id");
+        XML.addNode(doc, XML.getNodeList(doc, ".//image").item(XML.getNodeList(doc, ".//image").getLength() - 1), "comment");
+
+        XML.createDocument(doc, file.getAbsolutePath());
+    }
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_TAKE_PHOTO = 1;
 
@@ -124,6 +135,24 @@ public class MainActivity extends AppCompatActivity {
             /*Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             imageView.setImageBitmap(imageBitmap);*/
+            if(data != null){
+                Bundle bundle = data.getExtras();
+                if (bundle != null) {
+                    for (String key : bundle.keySet()) {
+                        Log.v("DEBUG", key + " : " + (bundle.get(key) != null ? bundle.get(key) : "NULL"));
+                    }
+                }else{
+                    Log.v("DEBUG","Vaina");
+                }
+                Log.v("DEBUG",data.getData().toString());
+                Log.v("DEBUG", ((Uri) data.getExtras().get(MediaStore.EXTRA_OUTPUT)).toString());
+
+            }else{
+                Log.v("DEBUG","Vaina2");
+                Log.v("DEBUG",currentPhotoPath);
+                addNewImage(XML.getDocument(file.getPath()),  currentPhotoPath);
+            }
+
         }
     }
 

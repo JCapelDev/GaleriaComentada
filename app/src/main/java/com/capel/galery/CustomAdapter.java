@@ -61,7 +61,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.commentView.setText(programCommentList.get(position).replaceAll("\\s+"," "));
-        holder.imageView.setImageBitmap(ThumbnailUtils.extractThumbnail(BitmapFactory.decodeResource(context.getResources(),context.getResources().getIdentifier(images.get(position).replaceAll("\\s+",""),"drawable",context.getPackageName())),200,200));
+        holder.imageView.setImageBitmap(ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(images.get(position).replaceAll("\\s+","")),200,200));
     }
 
     @Override
