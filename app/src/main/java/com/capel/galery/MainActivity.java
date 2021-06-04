@@ -39,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
     File file;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        /*try {
+        try {
             obtainData();
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         /*recyclerView = findViewById(R.id.id_recyclerView);
@@ -56,14 +56,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void obtainData() throws IOException {
-        file = new File("/data/data/com.capel.galery/files/data.xml");
+        file = new File(getFilesDir() + "/data.xml");
+
+
         if(!file.exists()){
-            createBaseXML(file.getAbsolutePath());
+            createBaseXML(file.getPath());
+
         }
 
 
-        alprogramImages = XML.getTextByTag(XML.getDocument("/data/data/com.capel.galery/files/data.xml"),"id");
-        alprogramComments = XML.getTextByTag(XML.getDocument("/data/data/com.capel.galery/files/data.xml"),"comment");
+        alprogramImages = XML.getTextByTag(XML.getDocument(getFilesDir() + "/data.xml"),"id");
+        alprogramComments = XML.getTextByTag(XML.getDocument(getFilesDir() + "/data.xml"),"comment");
     }
 
     public void editComment(View v){
@@ -77,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static void createBaseXML(String url) {
         File f = new File(url);
-
+        Log.v("Debug",f.getAbsolutePath());
         XML.createDocument("data", f.getAbsolutePath());
 
         Document doc = XML.getDocument(f.getAbsolutePath());
@@ -95,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     static final int REQUEST_TAKE_PHOTO = 1;
 
     private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE_SECURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             // Create the File where the photo should go
