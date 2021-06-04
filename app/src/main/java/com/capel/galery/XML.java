@@ -26,7 +26,26 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-
+/** Lista de Metodos:
+ * <br/> - getDocument(String fileUrl) 
+ * <br/> - getNodeList(Document doc, String xpath)
+ * <br/> - getRoot(Document doc)
+ * <br/> - getText(Node n)
+ * <br/> - getText(NodeList n)
+ * <br/> - getTextByTag(Document doc, String tag)
+ * <br/> - getNodeName(Node n)
+ * <br/> - getNodeName(NodeList n)
+ * <br/> - getAttributeText(Node n)
+ * <br/> - getAttributeText(NodeList n)
+ * <br/> - getAttributeName(Node n)
+ * <br/> - getAttributeName(NodeList n)
+ * <br/> - updateText(Node n, String newText)
+ * <br/> - createDocument(Document doc, String url)
+ * 
+ * @version 1.0
+ * @author Marc Merino
+ * @see https://wiket.esteveterradas.cat/index.php/DAM2_M06_UF1_Gesti%C3%B3n_de_ficheros_XML
+ */
 public class XML {
 
 	/**@param fileUrl La ruta del archivo XML
@@ -42,10 +61,10 @@ public class XML {
 			return (Document) db.parse(f);
 			
 		} catch (ParserConfigurationException e) {
-			System.out.println("Error al crear el lector de xml" + e.getCause());
+			System.out.println("Error al crear el lector de xml " + e.getCause());
 		} catch (SAXException | IOException e) {
-			System.out.println("Error al leer el archivo de xml" + e.getCause());
-		}		
+			System.out.println("Error al leer el archivo de xml " + e.getCause());
+		}	
 		return null;
 	}
 	
@@ -124,6 +143,15 @@ public class XML {
 	 */
 	public static ArrayList<String> getTextByTag(Document doc, String tag) {
 		return XML.getText(doc.getElementsByTagName(tag));
+	}
+	
+	/**@param doc El Document con el arbol XML
+	 * @param tag Una String con el nombre de la etiqueta a buscar
+	 * 
+	 * @return El NodeList especificado en la tag
+	 */
+	public static Node getNodeByTag(Document doc, String tag) {
+		return doc.getElementsByTagName(tag).item(0);
 	}
 	
 	/**@param doc El Document con el arbol XML
@@ -226,6 +254,22 @@ public class XML {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public static boolean addNode(Document doc, Node fatherNode, String name) {
+		try {
+			fatherNode.appendChild(doc.createElement(name));
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+		
+	}
+	
+	
 	/**@param doc el documento a escribir 
 	 * 
 	 * @param url del archivo xml
@@ -239,6 +283,26 @@ public class XML {
 			
 		} catch (TransformerException | TransformerFactoryConfigurationError e) {
 			System.out.println("Error al crear el documento XML");
+		}
+	}
+	
+	/**@param rootNode
+	 * @param url
+	 */
+	public static void createDocument(String rootNode, String url) {
+		try {
+			Transformer transformer = TransformerFactory.newInstance().newTransformer();
+			Result output = new StreamResult(new File(url));
+			
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			
+			transformer.transform(new DOMSource(db.newDocument().createElement(rootNode)), output);
+			
+		} catch (TransformerException | TransformerFactoryConfigurationError e) {
+			System.out.println("Error al crear el documento XML");
+		} catch (ParserConfigurationException e) {
+			System.out.println("Error al generar el nodo raiz el documento XML");
 		}
 	}
 	

@@ -18,6 +18,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.w3c.dom.Document;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -54,24 +56,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void obtainData() throws IOException {
-        /*file = new File("/data/data/com.capel.galery/files/data.xml");
-        file.createNewFile(); // if file already exists will do nothing
-        FileOutputStream oFile = new FileOutputStream(file, false);
+        file = new File("/data/data/com.capel.galery/files/data.xml");
         if(!file.exists()){
-            try {
-                FileOutputStream fOut = openFileOutput("data.xml", Context.MODE_PRIVATE);
-                file.createNewFile();
-                Log.v("Debug","data.xml no existe");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            createBaseXML(file.getAbsolutePath());
         }
 
 
         alprogramImages = XML.getTextByTag(XML.getDocument("/data/data/com.capel.galery/files/data.xml"),"id");
-        alprogramComments = XML.getTextByTag(XML.getDocument("/data/data/com.capel.galery/files/data.xml"),"comment");*/
+        alprogramComments = XML.getTextByTag(XML.getDocument("/data/data/com.capel.galery/files/data.xml"),"comment");
     }
 
     public void editComment(View v){
@@ -81,6 +73,22 @@ public class MainActivity extends AppCompatActivity {
     public void takePhoto(View v){
         dispatchTakePictureIntent();
         /*Toast.makeText(this, "Haz la foto hostia", Toast.LENGTH_SHORT).show();*/
+    }
+
+    public static void createBaseXML(String url) {
+        File f = new File(url);
+
+        XML.createDocument("data", f.getAbsolutePath());
+
+        Document doc = XML.getDocument(f.getAbsolutePath());
+
+        XML.addNode(doc, XML.getRoot(doc), "images");
+        XML.addNode(doc, XML.getNodeByTag(doc, "images"), "image");
+
+        XML.addNode(doc, XML.getNodeList(doc, ".//image").item(0), "id");
+        XML.addNode(doc, XML.getNodeList(doc, ".//image").item(0), "comment");
+
+        XML.createDocument(doc, f.getAbsolutePath());
     }
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
